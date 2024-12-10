@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { NgFor } from '@angular/common'; 
 
-
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet,NgFor],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  selector: 'app-labs',
+  imports: [ NgFor],
+  templateUrl: './labs.component.html',
+  styleUrl: './labs.component.css'
 })
-export class AppComponent {
+export class LabsComponent {
   welcome = 'hola locas';
   tasks=[
     "instalar el angular cli",
     "crear proyecto",
     "crear componentes"
   ]
+  name ="Santiago"
+  edad = 39
+
+
 }
