@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
-import { NgFor } from '@angular/common'; 
+import { Component, signal } from '@angular/core';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-labs',
-  imports: [ NgFor],
+  imports: [NgFor],
   templateUrl: './labs.component.html',
-  styleUrl: './labs.component.css'
+  styleUrl: './labs.component.css',
 })
 export class LabsComponent {
-  welcome = 'hola locas';
-  tasks=[
-    "instalar el angular cli",
-    "crear proyecto",
-    "crear componentes"
-  ]
-  name ="Santiago"
-  edad = 39
+  welcome = 'Bienvenidos al curso de front';
+  tasks =signal(  ['instalar el angular cli', 
+           'crear proyecto', 
+           'crear componentes'
+          ])
+  person = {
+    name: signal('Santiago'),
+    edad: signal (39),
+  };
 
+  clickHandler (){
+    alert("hola perroskys")
+  }
 
 }
