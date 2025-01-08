@@ -13,12 +13,17 @@ export class HomeComponent {
   tasks = signal<Task[]>([
     {
       id:Date.now(),
-      title:"prubaMaxima",
+      title:"Instalar Angular CLI",
       completed: false
     },
     {
       id:Date.now(),
-      title:"prubaMaxima2",
+      title:"Crear Proyecto",
+      completed: false
+    },
+    {
+      id:Date.now(),
+      title:"Crear Componente",
       completed: false
     }
     
