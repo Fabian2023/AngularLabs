@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor,CommonModule } from '@angular/common';
 
 import{Task} from "../../models/task.model"
 
 @Component({
   selector: 'app-home',
-  imports: [NgFor],
+  imports: [NgFor,CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -28,14 +28,6 @@ export class HomeComponent {
     }
     
   ]);
-  //agregar tareas
-  changeHandler(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const newTask = input.value;
-    this.addTask(newTask)
-    
-  }
-
   addTask(title:string){
     const newTask ={
       id: Date.now(),
@@ -45,10 +37,24 @@ export class HomeComponent {
     }
     this.tasks.update((tasks) => [...tasks, newTask]);
   }
+  //agregar tareas
+  changeHandler(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newTask = input.value;
+    this.addTask(newTask)
+    
+  }
+
   //eliminar tareas
   deleteTask(index: number) {
     this.tasks.update((tasks) =>
       tasks.filter((task, position) => position !== index)
     );
+  }
+  //tarea completada
+  completeTask(index: number) {
+    this.tasks.update((tasks) =>
+      tasks.map((task, position) => position === index ? { ...task, completed: true } : task )
+  );
   }
 }
