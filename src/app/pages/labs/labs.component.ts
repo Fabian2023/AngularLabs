@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor,NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-labs',
-  imports: [NgFor],
+  imports: [NgFor,NgIf],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css',
 })
@@ -13,13 +13,27 @@ export class LabsComponent {
            'crear proyecto', 
            'crear componentes'
           ])
-  person = {
-    name: signal('Santiago'),
-    edad: signal (39),
-  };
+  person = signal({
+    name: 'Santiago',
+    edad: 19,
+    avatar:"https://w3schools.com/howto/img_avatar.png"
+  })
 
   clickHandler (){
     alert("hola perroskys")
+  }
+
+  changeAge(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newValue = input.value;
+    this.person.update(prevState =>{
+      return{
+        ...prevState,
+        edad: parseInt(newValue,10)
+      }
+    })
+  
+    
   }
 
 }

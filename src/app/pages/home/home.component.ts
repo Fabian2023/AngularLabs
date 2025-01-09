@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { NgFor,CommonModule } from '@angular/common';
+import { NgFor,CommonModule,NgIf } from '@angular/common';
 
 import{Task} from "../../models/task.model"
 
 @Component({
   selector: 'app-home',
-  imports: [NgFor,CommonModule],
+  imports: [NgFor,CommonModule,NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -42,6 +42,7 @@ export class HomeComponent {
     const input = event.target as HTMLInputElement;
     const newTask = input.value;
     this.addTask(newTask)
+    input.value = '';
     
   }
 

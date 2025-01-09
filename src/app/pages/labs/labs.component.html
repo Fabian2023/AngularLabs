@@ -8,7 +8,8 @@
   </ul>
   <hr />
   <p class="mt-2">la suma de 3 +3 es {{ 3 + 3 }}</p>
-  <p class="mt-2">mi nombre es: {{ person.name() }} y tengo {{ person.edad() }}</p>
+  <p class="mt-2">mi nombre es: {{ person().name }} y tengo {{ person().edad }}</p>
+  <img [src]="person().avatar" alt="Avatar de {{ person().name }}" class="avatar">
   <hr />
   <hr />
   <button class="mt-2 border-2 border-black rounded-xl w-28 hover:bg-gray-200" (dblclick)="clickHandler()">Click me db</button>
@@ -19,4 +20,7 @@
 </button>
 
   <h1 class="mt-4">signals</h1>
+  <input type="number" [value]="person().edad" (change)="changeAge($event)">
+  <div class="mt-4" *ngIf="person().name === 'Santiago' && person().edad > 18 else elseblock "> soy santiago y soy mayor</div>
+  <ng-template #elseblock>soy santiago y soy menor</ng-template>
 </div>
