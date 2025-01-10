@@ -3,6 +3,7 @@ import { NgFor, CommonModule, NgIf } from '@angular/common';
 import { ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 
 import { Task } from '../../models/task.model';
+import { iif } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -46,10 +47,9 @@ export class HomeComponent {
   changeHandler() {
     if (this.newTaskCtrl.valid) {
       const value = this.newTaskCtrl.value.trim();
-      if(value !== ''){
-
+      if (value !== '') {
         this.addTask(value);
-        this.newTaskCtrl.setValue('')
+        this.newTaskCtrl.setValue('');
       }
     }
   }
@@ -66,6 +66,36 @@ export class HomeComponent {
       tasks.map((task, position) =>
         position === index ? { ...task, completed: true } : task
       )
+    );
+  }
+
+  updateTaskEditingMode(index: number) {
+    this.tasks.update((tasks) =>
+      tasks.map((task: Task, position: number) => {
+        if (position === index) {
+          return {
+            ...task,
+            editing: true, 
+          };
+        }
+        return { ...task, editing: false };
+      })
+    );
+  }
+
+  updateTaskText(index: number, event:Event) {
+    const input = event.target as HTMLInputElement
+    this.tasks.update((tasks) =>
+      tasks.map((task: Task, position: number) => {
+        if (position === index) {
+          return {
+            ...task,
+            title: input.value, 
+            editing:false
+          };
+        }
+        return task
+      })
     );
   }
 }
