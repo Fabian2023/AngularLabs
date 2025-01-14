@@ -1,8 +1,8 @@
 <section class="todoapp">
   <header class="header">
     <div class="container">
-      <h2>My Day</h2>
-      <p>All my tasks in one place</p>
+      <h2 class="text-white mb-4 text-4xl">My Day</h2>
+      <p class="text-white mb-4" >All my tasks in one place</p>
       <input
         class="new-todo"
         placeholder="Type new todo"
@@ -15,11 +15,6 @@
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
-    <!-- <pre>
-        <code>
-          {{tasks()  | json }}
-        </code>
-       </pre> -->
     <section class="main">
       <ul class="todo-list">
         <li
@@ -69,30 +64,47 @@
     <!-- This footer should be hidden by default and shown when there are todos -->
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
-      <div *ngIf="tasks().length > 1; else elseblock">
+      <div *ngIf="taskByFilter().length > 1; else elseblock">
         <span class="todo-count">
-          <strong>{{ tasks().length }}</strong> items
+          <strong>{{ taskByFilter().length }}</strong> items
         </span>
       </div>
 
       <ng-template #elseblock>
         <span class="todo-count">
-          <strong>{{ tasks().length }}</strong> item
+          <strong>{{ taskByFilter().length }}</strong> item
         </span>
       </ng-template>
 
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a (click)="changeFilter('all')"  class="selected">All</a>
+          <a 
+            (click)="changeFilter('all')" 
+            [ngClass]="{ active: filter() === 'all' }"
+          >
+            All
+          </a>
         </li>
         <li>
-          <a (click)="changeFilter('pending')">Pending</a>
+          <a 
+            (click)="changeFilter('pending')" 
+            [ngClass]="{ active: filter() === 'pending' }"
+          >
+            Pending
+          </a>
         </li>
         <li>
-          <a (click)="changeFilter('completed')">Completed</a>
+          <a 
+            (click)="changeFilter('completed')" 
+            [ngClass]="{ active: filter() === 'completed' }"
+          >
+            Completed
+          </a>
         </li>
       </ul>
+      
+      
       <!-- Hidden if no completed items are left ↓ -->
       <button class="clear-completed">Clear completed</button>
     </footer>
