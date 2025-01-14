@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
 import { NgFor, CommonModule, NgIf } from '@angular/common';
 import { ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 
@@ -12,23 +12,7 @@ import { Task } from '../../models/task.model';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Instalar Angular CLI',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear Proyecto',
-      completed: false,
-    },
-    {
-      id: Date.now(),
-      title: 'Crear Componente',
-      completed: false,
-    },
-  ]);
+  tasks = signal<Task[]>([]);
   addTask(title: string) {
     const newTask = {
       id: Date.now(),
@@ -55,6 +39,26 @@ export class HomeComponent {
     nonNullable: true,
     validators: [Validators.required],
   });
+injector = inject(Injector)
+
+ngOnInit(){
+  const storage = localStorage.getItem('tasks');
+  if (storage){
+    const tasks = JSON.parse(storage);
+    this.tasks.set(tasks)
+  }
+  this.tasksTrack()
+
+}
+
+tasksTrack (){
+  effect(()=>{
+    const tasks =this.tasks()
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+    
+  },{injector:this.injector})
+
+}
 
   //agregar tareas
   changeHandler() {
