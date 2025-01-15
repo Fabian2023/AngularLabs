@@ -2,7 +2,7 @@
   <header class="header">
     <div class="container">
       <h2 class="text-white mb-4 text-4xl">My Day</h2>
-      <p class="text-white mb-4" >All my tasks in one place</p>
+      <p class="text-white mb-4">All my tasks in one place</p>
       <input
         class="new-todo"
         placeholder="Type new todo"
@@ -17,9 +17,9 @@
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main">
       <ul class="todo-list">
+        @for (task of taskByFilter(); track task; let i = $index) {
         <li
           (dblclick)="updateTaskEditingMode(i)"
-          *ngFor="let task of taskByFilter(); index as i"
           [class.editing]="task.editing"
           [class.completed]="task.completed"
         >
@@ -33,8 +33,13 @@
             <label>{{ task.title }}</label>
             <button class="destroy" (click)="deleteTask(i)"></button>
           </div>
-          <input class="edit"(keydown.enter)="updateTaskText(i, $event)" [value]="task.title" />
+          <input
+            class="edit"
+            (keydown.enter)="updateTaskText(i, $event)"
+            [value]="task.title"
+          />
         </li>
+        }
         <!-- <li class="completed">
             <div class="view">
               <input class="toggle" type="checkbox" checked />
@@ -62,51 +67,50 @@
       </ul>
     </section>
     <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer class="footer" *ngIf="taskByFilter().length > 0">
+    @if (taskByFilter().length > 0) {
+    <footer class="footer">
       <!-- This should be `0 items left` by default -->
-      <div *ngIf="taskByFilter().length > 1; else elseblock">
+      @if (taskByFilter().length > 1) {
+      <div>
         <span class="todo-count">
           <strong>{{ taskByFilter().length }}</strong> items
         </span>
       </div>
-
-      <ng-template #elseblock>
-        <span class="todo-count">
-          <strong>{{ taskByFilter().length }}</strong> item
-        </span>
-      </ng-template>
-
+      } @else {
+      <span class="todo-count">
+        <strong>{{ taskByFilter().length }}</strong> item
+      </span>
+      }
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a 
-            (click)="changeFilter('all')" 
+          <a
+            (click)="changeFilter('all')"
             [ngClass]="{ active: filter() === 'all' }"
           >
             All
           </a>
         </li>
         <li>
-          <a 
-            (click)="changeFilter('pending')" 
+          <a
+            (click)="changeFilter('pending')"
             [ngClass]="{ active: filter() === 'pending' }"
           >
             Pending
           </a>
         </li>
         <li>
-          <a 
-            (click)="changeFilter('completed')" 
+          <a
+            (click)="changeFilter('completed')"
             [ngClass]="{ active: filter() === 'completed' }"
           >
             Completed
           </a>
         </li>
       </ul>
-      
-      
       <!-- Hidden if no completed items are left ↓ -->
       <button class="clear-completed">Clear completed</button>
     </footer>
+    }
   </div>
 </section>

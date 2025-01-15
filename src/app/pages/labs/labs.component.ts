@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-labs',
-  imports: [NgFor, NgIf,ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css',
 })

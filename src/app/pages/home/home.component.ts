@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
-import { NgFor, CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 
 import { Task } from '../../models/task.model';
@@ -7,7 +7,7 @@ import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-home',
-  imports: [NgFor, CommonModule, NgIf, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
